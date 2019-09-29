@@ -1,4 +1,4 @@
-package com.lwq.spark
+package com.lwq.spark.value
 
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
@@ -9,7 +9,7 @@ import org.apache.spark.{SparkConf, SparkContext}
   * @Version 1.0
   * @Describe  所有算子的计算功能通过executor执行（_*2）
   */
-object GlomRDD {
+object MapRDD {
   def main(args: Array[String]): Unit = {
     //local模式
     //创建sparkconf对象
@@ -19,12 +19,9 @@ object GlomRDD {
     //创建spark上下文对象
     val sc = new SparkContext(conf)
 
-    //glom算子:一个分区的数放到一个数组中
-    val listRDD: RDD[Int] = sc.makeRDD(1 to 16,3)
-    val glomRDD: RDD[Array[Int]] = listRDD.glom()
-    glomRDD.collect().foreach(array=>{
-      println(array.max)
-      println(array.mkString(","))
-    })
+    //map算子
+    val listRDD: RDD[Int] = sc.makeRDD(1 to 10)
+    val mapRDD: RDD[Int] = listRDD.map(_*2)
+    mapRDD.collect().foreach(println)
   }
 }

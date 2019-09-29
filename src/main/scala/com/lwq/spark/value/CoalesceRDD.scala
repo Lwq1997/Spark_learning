@@ -1,4 +1,4 @@
-package com.lwq.spark
+package com.lwq.spark.value
 
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}

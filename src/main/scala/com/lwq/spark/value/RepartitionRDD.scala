@@ -1,4 +1,4 @@
-package com.lwq.spark
+package com.lwq.spark.value
 
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
@@ -9,7 +9,7 @@ import org.apache.spark.{SparkConf, SparkContext}
   * @Version 1.0
   * @Describe  所有算子的计算功能通过executor执行（_*2）
   */
-object FilterRDD {
+object RepartitionRDD {
   def main(args: Array[String]): Unit = {
     //local模式
     //创建sparkconf对象
@@ -20,8 +20,11 @@ object FilterRDD {
     val sc = new SparkContext(conf)
 
     //map算子
-    val listRDD: RDD[Int] = sc.makeRDD(1 to 10)
-    val filterRDD: RDD[Int] = listRDD.filter(_%2==0)
-    filterRDD.collect().foreach(println)
+    val listRDD: RDD[Int] = sc.makeRDD(1 to 16,4)
+    val repartitionRDD: RDD[Int] = listRDD.repartition(2 )
+    repartitionRDD.collect().foreach(println)
+    repartitionRDD.glom().collect().foreach(array=>{
+      println(array.mkString(","))
+    })
   }
 }
