@@ -21,6 +21,6 @@ object partitionTest {
 
     val partitioned = rdd.partitionBy(new HashPartitioner(2))
 
-    println(rdd.partitioner)
+    println(partitioned.partitioner)
   }
 }
