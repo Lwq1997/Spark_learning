@@ -15,12 +15,15 @@ object hashpartitionTest {
 
    val rdd: RDD[(Int, Int)] = context.parallelize(List((1,3),(1,2),(2,4),(2,3),(3,6),(3,8)),8)
 
+    //没有分区器
     rdd.mapPartitionsWithIndex((index,iter)=>{ Iterator(index.toString+" : "+iter.mkString("|")) }).collect.foreach(println)
 
     val hashpar = rdd.partitionBy(new HashPartitioner(7))
 
     println(hashpar.count)
     println(hashpar.partitioner)
+    //使用hash分区器
+    hashpar.mapPartitionsWithIndex((index,iter)=>{ Iterator(index.toString+" : "+iter.mkString("|")) }).collect().foreach(println)
 
     hashpar.mapPartitions(iter => Iterator(iter.length)).collect().foreach(println)
   }
