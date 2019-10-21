@@ -2,7 +2,7 @@ package com.lwq.sparksql
 
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.expressions.{Aggregator, MutableAggregationBuffer, UserDefinedAggregateFunction}
-import org.apache.spark.sql.{Encoder, Encoders, Row, SparkSession}
+import org.apache.spark.sql.{DataFrame, Encoder, Encoders, Row, SparkSession}
 import org.apache.spark.sql.types.{DataType, DoubleType, LongType, StructField, StructType}
 
 
@@ -18,6 +18,14 @@ object HelloWorld {
 
     val df = spark.read.json("file/user.json")
 
+
+    val peopleDF = spark.read.format("json").load("file/user.json")
+    //peopleDF.write.format("parquet").save("file/user.parquet")
+
+    val peopleParquetDF: DataFrame = spark.read.parquet("file/user.parquet")
+    peopleParquetDF.createOrReplaceTempView("peopleParquet")
+    val nameDF: DataFrame = spark.sql("select name from peopleParquet")
+    nameDF.show()
 
     import spark.implicits._
 
