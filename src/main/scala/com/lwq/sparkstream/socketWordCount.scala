@@ -12,7 +12,7 @@ object socketWordCount {
     val ssc = new StreamingContext(sparkConf, Seconds(5))
 
     //3.通过监控端口创建DStream，读进来的数据为一行行
-    val lineStreams = ssc.textFileStream("file:///Users/lwq/IdeaProjects/Spark_learning/sparkstreamfile")
+    val lineStreams = ssc.socketTextStream("localhost",9999)
 
     //将每一行数据做切分，形成一个个单词
     val wordStreams = lineStreams.flatMap(_.split(" "))
