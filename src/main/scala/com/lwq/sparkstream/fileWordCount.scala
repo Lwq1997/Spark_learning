@@ -3,6 +3,7 @@ package com.lwq.sparkstream
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
+//必须通过命令行去崇重命名文件才可以被监测到
 object fileWordCount {
   def main(args: Array[String]): Unit = {
     //1.初始化Spark配置信息
